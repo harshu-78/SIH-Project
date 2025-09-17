@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Feedback | SwasthyaSetu</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+  <header class="fixed w-full top-0 left-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-8 py-4">
+      <div class="flex items-center -space-x-1 sm:space-x-0">
+        <img src="assets/Kerala-Logo.png" alt="SwasthyaSetu Logo" class="h-12 sm:h-14" />
+        <div class="flex flex-col items-center">
+          <h1 class="text-base sm:text-lg font-bold text-blue-700 leading-tight">SwasthyaSetu</h1>
+          <h2 class="text-sm sm:text-base font-bold text-green-700 leading-tight">KERALA</h2>
+        </div>
+      </div>
+      <nav class="hidden md:flex space-x-6 lg:space-x-8 text-sm font-medium">
+        <a href="index.html" class="hover:text-green-600 transition">Home</a>
+        <a href="register.html" class="hover:text-green-600 transition">Register</a>
+        <a href="dashboard.html" class="hover:text-green-600 transition">Dashboard</a>
+        <a href="analytics.html" class="hover:text-green-600 transition">Analytics</a>
+        <a href="feedback.html" class="hover:text-green-600 transition">Feedback</a>
+        <a href="healthworker.html" class="hover:text-green-600 transition">HealthWorker</a>
+        <a href="contact.html" class="hover:text-green-600 transition">Contact</a>
+      </nav>
+      <button id="menuBtn" class="md:hidden px-3 py-2 border rounded-lg text-green-700 border-green-700">☰</button>
+    </div>
+
+    <div id="mobileNav" class="hidden md:hidden bg-white/90 backdrop-blur-lg shadow-lg">
+      <nav class="flex flex-col space-y-2 px-6 py-4 text-green-700 font-medium text-sm">
+        <a href="index.html" class="hover:text-green-600">Home</a>
+        <a href="register.html" class="hover:text-green-600">Register</a>
+        <a href="dashboard.html" class="hover:text-green-600">Dashboard</a>
+        <a href="analytics.html" class="hover:text-green-600">Analytics</a>
+        <a href="feedback.html" class="hover:text-green-600">Feedback</a>
+        <a href="healthworker.html" class="hover:text-green-600">HealthWorker</a>
+        <a href="contact.html" class="hover:text-green-600">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-28 max-w-5xl mx-auto px-4">
+
+    <!-- User Feedback Form -->
+    <section class="bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold text-green-700 mb-4">📝 User Feedback</h2>
+
+      <label class="block mb-2 font-medium">Feedback Type</label>
+      <select id="category" class="w-full border rounded-lg p-2 mb-4">
+        <option>App Usage Issue</option>
+        <option>Medical Info Related Suggestion</option>
+        <option>Language/Translation Feedback</option>
+        <option>General Suggestion</option>
+        <option>Urgent Issue</option>
+      </select>
+
+      <label class="block mb-2 font-medium">Rating Type</label>
+      <div class="flex space-x-4 mb-4">
+        <button id="starMode" class="px-3 py-1 border rounded bg-green-100">⭐ Star</button>
+        <button id="emojiMode" class="px-3 py-1 border rounded">😃 Emoji</button>
+      </div>
+
+      <div id="ratingContainer" class="flex space-x-2 text-2xl mb-4 cursor-pointer"></div>
+      <textarea id="feedbackText" rows="4" placeholder="Write your feedback..." class="w-full border rounded-lg p-3 mb-4"></textarea>
+
+      <label class="block mb-2 font-medium">Upload Voice Note 🎤</label>
+      <input type="file" id="voiceUpload" accept="audio/*" class="mb-4">
+
+      <label class="block mb-2 font-medium">Attach Screenshot 📸</label>
+      <input type="file" id="screenshotUpload" accept="image/*" class="mb-4">
+
+      <label class="inline-flex items-center space-x-2 mb-4">
+        <input type="checkbox" id="anonymous" class="w-4 h-4">
+        <span>Submit as Anonymous 🔒</span>
+      </label>
+
+      <div id="locationBox" class="text-sm text-gray-600 mb-4">📍 Capturing your location...</div>
+
+      <button onclick="submitUserFeedback()" class="w-full bg-green-600 text-white font-medium py-3 rounded-lg hover:bg-green-700">
+        Submit Feedback
+      </button>
+    </section>
+
+    <!-- Doctor Feedback Form -->
+    <section class="bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold text-green-700 mb-6">🩺 Doctor / Healthcare Feedback</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block mb-2 font-medium">Patient Data Accuracy</label>
+          <select id="accuracy" class="w-full border rounded-lg p-2">
+            <option>Excellent ✅</option>
+            <option>Good 👍</option>
+            <option>Average ⚠️</option>
+            <option>Poor ❌</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-2 font-medium">Clarity of Information</label>
+          <select id="clarity" class="w-full border rounded-lg p-2">
+            <option>Excellent ✅</option>
+            <option>Good 👍</option>
+            <option>Average ⚠️</option>
+            <option>Poor ❌</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">Monitoring Suggestions</label>
+        <textarea id="monitoring" rows="3" placeholder="Suggest what additional patient data should be monitored..." class="w-full border rounded-lg p-3"></textarea>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">New Analytics / Charts Requests</label>
+        <textarea id="analyticsRequest" rows="3" placeholder="Request new charts or analytics features..." class="w-full border rounded-lg p-3"></textarea>
+      </div>
+
+      <button onclick="submitDoctorFeedback()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">
+        Submit Doctor Feedback
+      </button>
+    </section>
+
+    <!-- Website / App Feedback -->
+    <section class="bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-2xl font-bold text-green-700 mb-6">💻 Website / App Feedback</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="block mb-2 font-medium">UI / UX</label>
+          <select id="uiux" class="w-full border rounded-lg p-2">
+            <option>Excellent ✅</option>
+            <option>Good 👍</option>
+            <option>Average ⚠️</option>
+            <option>Poor ❌</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block mb-2 font-medium">Performance / Speed</label>
+          <select id="performance" class="w-full border rounded-lg p-2">
+            <option>Excellent ✅</option>
+            <option>Good 👍</option>
+            <option>Average ⚠️</option>
+            <option>Poor ❌</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">Responsiveness / Mobile Experience</label>
+        <select id="responsiveness" class="w-full border rounded-lg p-2">
+          <option>Excellent ✅</option>
+          <option>Good 👍</option>
+          <option>Average ⚠️</option>
+          <option>Poor ❌</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-medium">Suggestions / Improvements</label>
+        <textarea id="websiteSuggestions" rows="3" placeholder="Any feedback to improve the website or app..." class="w-full border rounded-lg p-3"></textarea>
+      </div>
+
+      <button onclick="submitWebsiteFeedback()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700">
+        Submit Website Feedback
+      </button>
+    </section>
+
+    <!-- Community Feedback Wall -->
+    <section class="bg-white shadow-lg rounded-lg p-6 mb-8">
+      <h2 class="text-xl font-bold text-green-700 mb-4">Community Feedback Wall</h2>
+      <div id="feedbackList" class="space-y-4"></div>
+    </section>
+
+    <!-- Feedback Summary Button -->
+    <div class="text-center mb-12">
+      <button onclick="showSummary()" class="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700">
+        📊 View Feedback Summary
+      </button>
+    </div>
+  </main>
+
+  <!-- Feedback Summary Modal -->
+  <div id="summaryModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 max-w-2xl overflow-y-auto max-h-[90vh]">
+      <h2 class="text-2xl font-bold text-green-700 mb-4">📊 Feedback Summary</h2>
+      <canvas id="summaryChart" class="w-full h-64 mb-4"></canvas>
+      <canvas id="categoryChart" class="w-full h-64 mb-4"></canvas>
+      <canvas id="typeChart" class="w-full h-64 mb-4"></canvas>
+      <p id="sentimentResult" class="mt-4 text-center font-medium text-gray-700"></p>
+      <button onclick="closeSummary()" class="mt-6 bg-green-600 text-white px-4 py-2 rounded-lg w-full">Close</button>
+    </div>
+  </div>
+
+<script>
+  // Mobile Nav
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileNav = document.getElementById("mobileNav");
+  menuBtn.addEventListener("click", () => mobileNav.classList.toggle("hidden"));
+
+  // User Feedback
+  let feedbacks = [];
+  let rating=0, ratingType='star';
+
+  const ratingContainer = document.getElementById("ratingContainer");
+  const starModeBtn = document.getElementById("starMode");
+  const emojiModeBtn = document.getElementById("emojiMode");
+
+  starModeBtn.onclick = ()=>{ ratingType='star'; renderRating(); }
+  emojiModeBtn.onclick = ()=>{ ratingType='emoji'; renderRating(); }
+
+  function renderRating(){
+    ratingContainer.innerHTML='';
+    if(ratingType==='star'){
+      for(let i=1;i<=5;i++){
+        const star = document.createElement('span');
+        star.textContent='⭐';
+        star.classList.add('cursor-pointer');
+        star.onclick=()=>{ rating=i; renderRating(); }
+        star.style.color = i<=rating?'gold':'gray';
+        ratingContainer.appendChild(star);
+      }
+    }else{
+      const emojis=['😡','😕','😐','😊','😃'];
+      emojis.forEach((e,j)=>{
+        const span=document.createElement('span');
+        span.textContent=e;
+        span.classList.add('cursor-pointer');
+        span.onclick=()=>{ rating=j+1; renderRating(); }
+        span.style.transform = (j+1===rating)?'scale(1.4)':'scale(1)';
+        ratingContainer.appendChild(span);
+      });
+    }
+  }
+  renderRating();
+
+  // Location
+  const locationBox = document.getElementById("locationBox");
+  let currentLocation='';
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(pos=>{
+      currentLocation = `Lat ${pos.coords.latitude.toFixed(2)}, Lng ${pos.coords.longitude.toFixed(2)}`;
+      locationBox.innerText=`📍 Location: ${currentLocation}`;
+    });
+  }
+
+  // Submit User Feedback
+  function submitUserFeedback(){
+    const category = document.getElementById("category").value;
+    const text = document.getElementById("feedbackText").value;
+    const anonymous = document.getElementById("anonymous").checked;
+    const voiceInput = document.getElementById("voiceUpload");
+    const screenshotInput = document.getElementById("screenshotUpload");
+
+    if(!text || rating===0){ alert("⚠ Enter feedback & rating!"); return; }
+
+    const feedback = {
+      type:'user', category, rating, text,
+      user: anonymous?'Anonymous':'User',
+      votes:0,
+      voice:voiceInput.files[0]?URL.createObjectURL(voiceInput.files[0]):null,
+      screenshot:screenshotInput.files[0]?URL.createObjectURL(screenshotInput.files[0]):null,
+      location: currentLocation
+    };
+    feedbacks.push(feedback);
+    renderFeedback();
+    document.getElementById("feedbackText").value='';
+    rating=0;
+    renderRating();
+  }
+
+  // Submit Doctor Feedback
+  function submitDoctorFeedback(){
+    const accuracy=document.getElementById("accuracy").value;
+    const clarity=document.getElementById("clarity").value;
+    const monitoring=document.getElementById("monitoring").value;
+    const analyticsRequest=document.getElementById("analyticsRequest").value;
+
+    if(!monitoring && !analyticsRequest){ alert("⚠ Enter feedback!"); return; }
+
+    const doctorFeedback = { type:'doctor', accuracy, clarity, monitoring, analyticsRequest, votes:0, submittedAt:new Date() };
+    feedbacks.push(doctorFeedback);
+    renderFeedback();
+    alert("✅ Doctor feedback submitted!");
+    document.getElementById("monitoring").value='';
+    document.getElementById("analyticsRequest").value='';
+  }
+
+  // Submit Website Feedback
+  function submitWebsiteFeedback(){
+    const uiux=document.getElementById("uiux").value;
+    const performance=document.getElementById("performance").value;
+    const responsiveness=document.getElementById("responsiveness").value;
+    const suggestions=document.getElementById("websiteSuggestions").value;
+
+    if(!suggestions){ alert("⚠ Enter feedback!"); return; }
+
+    const websiteFeedback = { type:'website', uiux, performance, responsiveness, suggestions, votes:0, submittedAt:new Date() };
+    feedbacks.push(websiteFeedback);
+    renderFeedback();
+    alert("✅ Website feedback submitted!");
+    document.getElementById("websiteSuggestions").value='';
+  }
+
+  // Render Feedback Wall
+  function renderFeedback(){
+    feedbacks.sort((a,b)=>b.votes-a.votes);
+    const container=document.getElementById("feedbackList");
+    container.innerHTML='';
+    feedbacks.forEach((f,idx)=>{
+      const div=document.createElement('div');
+      div.className="p-4 border rounded-lg shadow-sm bg-gray-50 break-words";
+      if(f.type==='user'){
+        div.innerHTML=`<div class="flex justify-between items-center"><span class="font-bold text-green-700">${f.user}</span><span class="text-yellow-500">${'⭐'.repeat(f.rating)}</span></div><p class="mt-2">${f.text}</p>${f.voice?`<audio controls class="mt-2 w-full" src="${f.voice}"></audio>`:''}${f.screenshot?`<img src="${f.screenshot}" class="mt-2 max-h-40 rounded w-full object-contain">`:''}<small class="text-gray-500 block mt-1">Category: ${f.category} | Location: ${f.location || 'N/A'}</small><div class="flex space-x-4 mt-3 items-center"><button onclick="vote(${idx},1)" class="px-3 py-1 bg-green-200 rounded">👍</button><button onclick="vote(${idx},-1)" class="px-3 py-1 bg-red-200 rounded">👎</button><span class="text-gray-600">Votes: ${f.votes}</span></div>`;
+      } else if(f.type==='doctor'){
+        div.innerHTML=`<strong class="text-green-700">🩺 Doctor Feedback</strong><p>Accuracy: ${f.accuracy}, Clarity: ${f.clarity}</p><p>Monitoring: ${f.monitoring}</p><p>Analytics Request: ${f.analyticsRequest}</p><div class="flex space-x-4 mt-3 items-center"><button onclick="vote(${idx},1)" class="px-3 py-1 bg-green-200 rounded">👍</button><button onclick="vote(${idx},-1)" class="px-3 py-1 bg-red-200 rounded">👎</button><span class="text-gray-600">Votes: ${f.votes}</span></div>`;
+      } else {
+        div.innerHTML=`<strong class="text-green-700">💻 Website/App Feedback</strong><p>UI/UX: ${f.uiux}, Performance: ${f.performance}, Responsiveness: ${f.responsiveness}</p><p>Suggestions: ${f.suggestions}</p><div class="flex space-x-4 mt-3 items-center"><button onclick="vote(${idx},1)" class="px-3 py-1 bg-green-200 rounded">👍</button><button onclick="vote(${idx},-1)" class="px-3 py-1 bg-red-200 rounded">👎</button><span class="text-gray-600">Votes: ${f.votes}</span></div>`;
+      }
+      container.appendChild(div);
+    });
+  }
+
+  function vote(idx,val){ feedbacks[idx].votes+=val; renderFeedback(); }
+
+  // Feedback Summary
+  function showSummary(){
+    document.getElementById("summaryModal").classList.remove("hidden");
+
+    const ctx = document.getElementById("summaryChart").getContext("2d");
+    const ctxCat = document.getElementById("categoryChart").getContext("2d");
+    const ctxType = document.getElementById("typeChart").getContext("2d");
+
+    // User Ratings
+    const ratings=[0,0,0,0,0];
+    let sentimentScore=0;
+    feedbacks.forEach(f=>{ if(f.type==='user'){ ratings[f.rating-1]++; sentimentScore+=f.rating-3; }});
+
+    new Chart(ctx,{type:'bar',data:{labels:["1⭐","2⭐","3⭐","4⭐","5⭐"],datasets:[{label:"User Feedback Count",data:ratings,backgroundColor:["#f87171","#fb923c","#facc15","#34d399","#60a5fa"]}]} });
+
+    // Category Distribution
+    const categoryCounts={};
+    feedbacks.forEach(f=>{ if(f.type==='user') categoryCounts[f.category]=(categoryCounts[f.category]||0)+1; });
+    new Chart(ctxCat,{type:'pie',data:{labels:Object.keys(categoryCounts),datasets:[{label:"Category Count",data:Object.values(categoryCounts),backgroundColor:["#f87171","#fb923c","#facc15","#34d399","#60a5fa","#a78bfa","#f472b6"]}]}});
+
+    // Feedback Type Distribution
+    const typeCounts={user:0, doctor:0, website:0};
+    feedbacks.forEach(f=>typeCounts[f.type]++);
+    new Chart(ctxType,{type:'doughnut',data:{labels:["User","Doctor","Website/App"],datasets:[{label:"Type Distribution",data:Object.values(typeCounts),backgroundColor:["#34d399","#60a5fa","#f472b6"]}]}});
+
+    const sentimentText = sentimentScore>0?"😊 Mostly Positive": sentimentScore<0?"😡 Mostly Negative":"😐 Neutral";
+    document.getElementById("sentimentResult").innerText=sentimentText;
+  }
+
+  function closeSummary(){ document.getElementById("summaryModal").classList.add("hidden"); }
+
+</script>
+</body>
+</html>

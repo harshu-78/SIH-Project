@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <title>MediBridge • Dashboard</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <style>
+        /* small utilities */
+        .glass { background: rgba(255,255,255,0.75); backdrop-filter: blur(8px); }
+        .pulse-slow { animation: pulse 2.8s infinite; }
+        .card-hover { transition: transform .25s ease, box-shadow .25s ease; }
+        .card-hover:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(8,12,20,.12); }
+        /* modal */
+        .modal-backdrop { background: rgba(0,0,0,0.45); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-sky-50 via-white to-emerald-50 min-h-screen font-sans">
+
+<header class="fixed top-0 left-0 w-full z-40 glass border-b">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div class="flex items-center gap-3">
+            <img src="assets/Kerala-Logo.png" onerror="this.style.display='none'" class="h-9 w-9 rounded-md shadow" alt="logo"/>
+            <div>
+                <div class="text-lg font-bold text-green-700">MediBridge</div>
+                <div class="text-xs text-slate-600 -mt-1">Digital Health Records • Migrant Workers</div>
+            </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row sm:items-center gap-3 mt-2 sm:mt-0">
+            <div class="flex gap-2 w-full sm:w-auto">
+                <button id="btnSync" class="px-3 py-1 rounded-md bg-emerald-600 text-white text-sm hover:bg-emerald-700 w-full sm:w-auto">Sync Now</button>
+                <button id="btnAutoFill" class="px-3 py-1 rounded-md border text-sm w-full sm:w-auto">Auto-Fill Demo</button>
+            </div>
+
+            <div class="flex items-center justify-between sm:justify-start gap-3 mt-2 sm:mt-0">
+                <div id="notifBell" class="relative cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    </svg>
+                    <span id="notifCount" class="absolute -top-1 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">0</span>
+                </div>
+                <div>
+                    <div id="userNameTop" class="font-medium text-slate-700">User</div>
+                    <div id="userIdTop" class="text-xs text-slate-500 -mt-1">MB-XXXX-XXXX</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<main class="pt-28 max-w-7xl mx-auto px-4 sm:px-6 pb-12">
+
+    <section class="grid md:grid-cols-3 gap-6 items-center mb-6">
+        <div class="md:col-span-2 bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="flex flex-col sm:flex-row items-center sm:items-start justify-between">
+                <div class="text-center sm:text-left">
+                    <h1 id="greet" class="text-2xl font-bold text-slate-800">Namaskaram, </h1>
+                    <p class="text-sm text-slate-500">Health ID: <span id="healthId" class="font-semibold">MB-24-KE-10234</span></p>
+                </div>
+                <div class="text-center sm:text-right mt-4 sm:mt-0">
+                    <div class="text-xs text-slate-500">Sync status</div>
+                    <div id="syncBadge" class="mt-1 px-3 py-1 text-sm rounded-full bg-yellow-100 text-yellow-800">Offline</div>
+                </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="p-4 rounded-xl bg-slate-50 border flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="w-12 h-12 rounded-full bg-emerald-100 grid place-items-center text-emerald-600 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-sm text-slate-500">Next Appointment</div>
+                        <div id="nextAppt" class="font-semibold">12 Sep • PHC Aluva</div>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="w-12 h-12 rounded-full bg-blue-100 grid place-items-center text-blue-600 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 8v4l3 3"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-sm text-slate-500">Health Score</div>
+                        <div id="healthScore" class="font-semibold">92</div>
+                    </div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 border flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
+                    <div class="w-12 h-12 rounded-full bg-pink-100 grid place-items-center text-pink-600 flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M7 8h10M7 12h8m-8 4h6"/></svg>
+                    </div>
+                    <div>
+                        <div class="text-sm text-slate-500">Prescriptions</div>
+                        <div id="rxCount" class="font-semibold">2 active</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+            <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold">Quick Actions</h3>
+                <div class="text-xs text-slate-400">Tap to perform</div>
+            </div>
+            <div class="mt-4 grid grid-cols-2 gap-3">
+                <button id="openBook" class="py-3 px-3 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 w-full">📅 Book Appointment</button>
+                <button id="openReport" class="py-3 px-3 rounded-lg bg-sky-600 text-white hover:bg-sky-700 w-full">📤 Upload Report</button>
+                <button id="openProfile" class="py-3 px-3 rounded-lg border w-full">👤 Update Profile</button>
+                <button id="openNearby" class="py-3 px-3 rounded-lg border w-full">🏥 Nearby Centers</button>
+            </div>
+        </aside>
+    </section>
+
+    <section class="grid md:grid-cols-3 gap-6">
+
+        <div class="md:col-span-2 space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                <div class="flex flex-col sm:flex-row items-center justify-between">
+                    <h3 class="text-lg font-semibold mb-2 sm:mb-0">Health Records Summary</h3>
+                    <div class="text-sm text-slate-500">Last updated: <span id="lastUpdated">Just now</span></div>
+                </div>
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="rounded-xl p-4 bg-slate-50 border text-center">
+                        <div class="text-sm text-slate-500">Vaccination</div>
+                        <canvas id="vaccDonut" class="mx-auto mt-3" width="120" height="120"></canvas>
+                        <div id="vacText" class="text-lg font-semibold mt-2">0 / 4</div>
+                    </div>
+                    <div class="rounded-xl p-4 bg-slate-50 border">
+                        <div class="flex justify-between items-center flex-wrap">
+                            <div>
+                                <div class="text-sm text-slate-500">Active Prescriptions</div>
+                                <div id="rxList" class="font-semibold mt-1">—</div>
+                            </div>
+                            <div>
+                                <button id="addRx" class="px-3 py-1 rounded-md bg-indigo-600 text-white text-sm">+ Add</button>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-slate-500">Prescriptions include medicines & schedules</div>
+                    </div>
+                    <div class="rounded-xl p-4 bg-slate-50 border">
+                        <div class="text-sm text-slate-500">Reports</div>
+                        <ul id="reportList" class="mt-3 space-y-2 text-sm">
+                            </ul>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <button id="uploadBtnSmall" class="px-3 py-1 rounded-md bg-sky-600 text-white text-sm">Upload</button>
+                            <span id="syncBadgeSmall" class="px-3 py-1 text-xs rounded bg-yellow-100 text-yellow-800">Sync pending</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                <div class="flex flex-col sm:flex-row items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">Analytics & Trends</h3>
+                    <div class="text-xs text-slate-500">AI-assisted (demo)</div>
+                </div>
+                <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <canvas id="trendLine" class="rounded-lg bg-white p-2"></canvas>
+                    </div>
+                    <div>
+                        <canvas id="beforeAfter" class="rounded-lg bg-white p-2"></canvas>
+                    </div>
+                </div>
+                <div class="mt-4 flex flex-col sm:flex-row gap-4">
+                    <div class="p-4 rounded-xl bg-green-50 border flex-1 text-center">
+                        <div class="text-xs text-slate-500">Lives Potentially Saved</div>
+                        <div id="kpiLives" class="text-2xl font-bold text-emerald-700">0</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-blue-50 border flex-1 text-center">
+                        <div class="text-xs text-slate-500">Avg. Response Time</div>
+                        <div id="kpiResp" class="text-2xl font-bold text-sky-600">0h</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <aside class="space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold">Notifications</h3>
+                    <button id="clearNotifs" class="text-xs text-slate-500">Clear all</button>
+                </div>
+                <ul id="notifList" class="mt-4 space-y-3 text-sm">
+                    </ul>
+                <div class="mt-4 text-center">
+                    <button id="newReminder" class="px-3 py-2 rounded-lg bg-emerald-600 text-white w-full">+ New Reminder</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-lg card-hover">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold">Nearby Health Centres</h3>
+                    <div class="text-xs text-slate-400">Within 10 km</div>
+                </div>
+                <div id="nearbyList" class="mt-4 space-y-3">
+                    </div>
+                <div class="mt-4 text-center">
+                    <button id="showMap" class="px-3 py-2 rounded-lg border w-full">Show Map (Demo)</button>
+                </div>
+            </div>
+        </aside>
+    </section>
+</main>
+
+<footer class="max-w-7xl mx-auto px-6 py-6 text-xs text-slate-500 text-center">
+    © 2025 MediBridge | Smart India Hackathon • Demo Prototype
+</footer>
+
+<div id="modalProfile" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">Update Profile</h3>
+            <button class="text-slate-400" onclick="closeModal('modalProfile')">✕</button>
+        </div>
+        <form id="profileForm" class="mt-4 grid gap-3">
+            <input id="pfName" class="border rounded-xl px-3 py-2" placeholder="Full name"/>
+            <input id="pfId" class="border rounded-xl px-3 py-2" placeholder="Health ID"/>
+            <input id="pfDob" type="date" class="border rounded-xl px-3 py-2"/>
+            <select id="pfLang" class="border rounded-xl px-3 py-2">
+                <option>Malayalam</option><option>Hindi</option><option>Bengali</option><option>Odia</option>
+            </select>
+            <div class="flex flex-col sm:flex-row gap-2 mt-4">
+                <button class="px-4 py-2 bg-emerald-600 text-white rounded-xl w-full sm:w-auto">Save</button>
+                <button type="button" onclick="closeModal('modalProfile')" class="px-4 py-2 border rounded-xl w-full sm:w-auto">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modalBook" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">Book Appointment</h3>
+            <button class="text-slate-400" onclick="closeModal('modalBook')">✕</button>
+        </div>
+        <form id="bookForm" class="mt-4 grid gap-3">
+            <input id="bDate" type="date" class="border rounded-xl px-3 py-2"/>
+            <select id="bCentre" class="border rounded-xl px-3 py-2">
+                <option>PHC Aluva</option><option>CHC Kalamassery</option><option>District Hospital</option>
+            </select>
+            <textarea id="bNote" class="border rounded-xl px-3 py-2" placeholder="Notes (optional)"></textarea>
+            <div class="flex flex-col sm:flex-row gap-2 mt-4">
+                <button class="px-4 py-2 bg-emerald-600 text-white rounded-xl w-full sm:w-auto">Confirm</button>
+                <button type="button" onclick="closeModal('modalBook')" class="px-4 py-2 border rounded-xl w-full sm:w-auto">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modalReport" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">Upload Report (Demo)</h3>
+            <button class="text-slate-400" onclick="closeModal('modalReport')">✕</button>
+        </div>
+        <form id="reportForm" class="mt-4 grid gap-3">
+            <input id="rTitle" class="border rounded-xl px-3 py-2" placeholder="Report title e.g., CBC Report"/>
+            <input id="rDate" type="date" class="border rounded-xl px-3 py-2" />
+            <input id="rFile" type="file" class="border rounded-xl px-3 py-2"/>
+            <div class="flex flex-col sm:flex-row gap-2 mt-4">
+                <button class="px-4 py-2 bg-sky-600 text-white rounded-xl w-full sm:w-auto">Upload</button>
+                <button type="button" onclick="closeModal('modalReport')" class="px-4 py-2 border rounded-xl w-full sm:w-auto">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="modalMap" class="fixed inset-0 hidden items-center justify-center modal-backdrop z-50 p-4">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-4xl p-6">
+        <div class="flex justify-between items-center">
+            <h3 class="text-lg font-bold">Nearby Centres — Demo Map</h3>
+            <button class="text-slate-400" onclick="closeModal('modalMap')">✕</button>
+        </div>
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            <div class="p-4 rounded-xl border">
+                <h4 class="font-semibold">PHC Aluva</h4>
+                <div class="text-sm text-slate-500 mt-1">2.3 km • 24/7</div>
+                <div class="mt-3 flex flex-col sm:flex-row gap-2">
+                    <button class="px-3 py-1 rounded bg-emerald-600 text-white w-full sm:w-auto">Call</button>
+                    <button class="px-3 py-1 rounded border w-full sm:w-auto">Directions</button>
+                </div>
+            </div>
+            <div class="p-4 rounded-xl border">
+                <h4 class="font-semibold">CHC Kalamassery</h4>
+                <div class="text-sm text-slate-500 mt-1">5.6 km • 9 AM–6 PM</div>
+                <div class="mt-3 flex flex-col sm:flex-row gap-2">
+                    <button class="px-3 py-1 rounded bg-emerald-600 text-white w-full sm:w-auto">Call</button>
+                    <button class="px-3 py-1 rounded border w-full sm:w-auto">Directions</button>
+                </div>
+            </div>
+            <div class="p-4 rounded-xl border">
+                <h4 class="font-semibold">District Hospital</h4>
+                <div class="text-sm text-slate-500 mt-1">9.8 km • 24/7</div>
+                <div class="mt-3 flex flex-col sm:flex-row gap-2">
+                    <button class="px-3 py-1 rounded bg-emerald-600 text-white w-full sm:w-auto">Call</button>
+                    <button class="px-3 py-1 rounded border w-full sm:w-auto">Directions</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/main.js"></script>
+<script src="translations.js"></script>
+
+</body>
+</html>

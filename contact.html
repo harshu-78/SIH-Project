@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | MediBridge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen flex flex-col">
+<!-- Navbar -->
+<header class="fixed w-full top-0 left-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+     <div class="flex items-center -space-x-1 sm:space-x-0">
+            <img src="assets/Kerala-Logo.png" alt="MediBridge Logo" class="h-12 sm:h-14" />
+            <div class="flex flex-col items-center">
+                <h1 class="text-base sm:text-lg font-bold text-blue-700 leading-tight">
+                    SwasthyaSetu
+                </h1>
+                <h2 class="text-sm sm:text-base font-bold text-green-700 leading-tight">
+                    KERALA
+                </h2>
+            </div>
+        </div>
+    <nav class="space-x-8 hidden md:flex">
+      <a href="index.html" class="hover:text-green-600 font-medium transition">Home</a>
+      <a href="register.html" class="hover:text-green-600 font-medium transition">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600 font-medium transition">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600 font-medium transition">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600 font-medium transition">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600 font-medium transition">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600 font-medium transition">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600 font-medium transition">Comparison</a>
+    </nav>
+    <button id="menuBtn" class="md:hidden px-3 py-2 border rounded-lg text-green-700 border-green-700">☰</button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mobileNav" class="hidden md:hidden bg-white/90 backdrop-blur-lg shadow-lg">
+    <nav class="flex flex-col space-y-2 px-6 py-4 text-green-700 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="register.html" class="hover:text-green-600">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600">Comparison</a>
+    </nav>
+  </div>
+</header>
+
+
+  <!-- Contact Section -->
+  <main class="flex-1 pt-28 pb-16 px-6">
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12">
+
+      <!-- Left Info -->
+      <div>
+        <h2 class="text-4xl font-bold text-gray-800 mb-6">📞 Get in Touch</h2>
+        <p class="text-gray-600 mb-8">
+          Have questions or feedback? Reach out to us. We’d love to hear from you and work together towards accessible healthcare.
+        </p>
+
+        <div class="space-y-6">
+          <div class="flex items-start gap-4">
+            <span class="text-green-600 text-2xl">📍</span>
+            <div>
+              <h3 class="font-semibold text-gray-800">Our Office</h3>
+              <p class="text-gray-600">MediBridge HQ, Kochi, Kerala</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <span class="text-green-600 text-2xl">📧</span>
+            <div>
+              <h3 class="font-semibold text-gray-800">Email</h3>
+              <p class="text-gray-600">support@medibridge.in</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <span class="text-green-600 text-2xl">📞</span>
+            <div>
+              <h3 class="font-semibold text-gray-800">Phone</h3>
+              <p class="text-gray-600">+91 98765 43210</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Form -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg">
+        <form class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none" placeholder="Your Name" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none" placeholder="you@example.com" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Message</label>
+            <textarea rows="4" class="w-full mt-1 px-4 py-3 border rounded-xl focus:ring-2 focus:ring-green-500 outline-none" placeholder="Write your message..." required></textarea>
+          </div>
+          <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition transform hover:scale-105">
+            🚀 Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="max-w-7xl mx-auto mt-12 rounded-2xl overflow-hidden shadow-lg">
+      <iframe class="w-full h-72" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3940.163205759308!2d76.285697!3d9.981635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d8a3f3bcd2f%3A0x2cf4c1a!2sKochi%2C%20Kerala!5e0!3m2!1sen!2sin!4v1670000000000!5m2!1sen!2sin" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white py-6 text-center text-gray-500 border-t">
+    © 2025 MediBridge | All Rights Reserved
+  </footer>
+
+  <script>
+     const currentPage = window.location.pathname.split("/").pop(); 
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("text-green-600", "font-bold", "underline");
+        } else {
+            link.classList.add("hover:text-green-600");
+        }
+    });
+
+    // Mobile Menu Toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+        document.getElementById("mobileNav").classList.toggle("hidden");
+    });
+  </script>
+
+<script src="translations.js"></script>
+
+</body>
+</html>

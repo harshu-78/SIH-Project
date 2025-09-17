@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediBridge | Impact Comparison</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-100 via-white to-sky-50 min-h-screen flex flex-col">
+
+<!-- Navbar -->
+<header class="fixed w-full top-0 left-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-4 sm:px-8 py-4">
+   <div class="flex items-center -space-x-1 sm:space-x-0">
+            <img src="assets/Kerala-Logo.png" alt="MediBridge Logo" class="h-12 sm:h-14" />
+            <div class="flex flex-col items-center">
+                <h1 class="text-base sm:text-lg font-bold text-blue-700 leading-tight">
+                    SwasthyaSetu
+                </h1>
+                <h2 class="text-sm sm:text-base font-bold text-green-700 leading-tight">
+                    KERALA
+                </h2>
+            </div>
+        </div>
+    <nav class="space-x-6 hidden md:flex text-sm sm:text-base">
+      <a href="index.html" class="hover:text-green-600 font-medium transition">Home</a>
+      <a href="register.html" class="hover:text-green-600 font-medium transition">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600 font-medium transition">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600 font-medium transition">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600 font-medium transition">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600 font-medium transition">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600 font-medium transition">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600 font-medium transition">Comparison</a>
+    </nav>
+    <button id="menuBtn" class="md:hidden px-3 py-2 border rounded-lg text-green-700 border-green-700">☰</button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mobileNav" class="hidden md:hidden bg-white/90 backdrop-blur-lg shadow-lg">
+    <nav class="flex flex-col space-y-2 px-6 py-4 text-green-700 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="register.html" class="hover:text-green-600">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600">Comparison</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="flex-1 max-w-6xl mx-auto px-3 sm:px-4 pt-28 pb-10">
+  <h1 class="text-2xl sm:text-3xl font-bold text-center text-sky-700 mb-8 sm:mb-10">🌍 Impact Comparison</h1>
+
+  <div class="overflow-x-auto bg-white rounded-2xl shadow-lg border border-slate-200">
+    <table class="min-w-full text-left text-xs sm:text-sm">
+      <thead class="bg-slate-100 text-slate-700 uppercase tracking-wide">
+        <tr>
+          <th class="px-4 sm:px-6 py-3">Aspect</th>
+          <th class="px-4 sm:px-6 py-3">❌ Before (Manual)</th>
+          <th class="px-4 sm:px-6 py-3">✅ After (MediBridge)</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y">
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Patient Records</td>
+          <td class="px-4 sm:px-6 py-3">📒 Paper-based, easily lost</td>
+          <td class="px-4 sm:px-6 py-3">☁ Digital Health ID, always accessible</td>
+        </tr>
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Data Entry</td>
+          <td class="px-4 sm:px-6 py-3">✍️ Manual, slow & repetitive</td>
+          <td class="px-4 sm:px-6 py-3">⚡ Assisted Entry + QR/ABHA Scan</td>
+        </tr>
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Language Support</td>
+          <td class="px-4 sm:px-6 py-3">🌐 Limited, only English</td>
+          <td class="px-4 sm:px-6 py-3">🗣 Multilingual support (Hindi, Bengali, Malayalam…)</td>
+        </tr>
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Accessibility</td>
+          <td class="px-4 sm:px-6 py-3">🚶‍♂️ Requires smartphone</td>
+          <td class="px-4 sm:px-6 py-3">👩‍⚕️ Health worker assisted entry for migrants</td>
+        </tr>
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Health Camps</td>
+          <td class="px-4 sm:px-6 py-3">📅 Manual paper lists</td>
+          <td class="px-4 sm:px-6 py-3">📊 Digital scheduling + analytics</td>
+        </tr>
+        <tr>
+          <td class="px-4 sm:px-6 py-3 font-medium">Reports</td>
+          <td class="px-4 sm:px-6 py-3">🖊 Handwritten, error-prone</td>
+          <td class="px-4 sm:px-6 py-3">🖨 Instant printable summaries</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CTA -->
+  <div class="mt-8 sm:mt-10 text-center">
+    <a href="register.html" 
+       class="inline-block px-5 sm:px-6 py-3 rounded-xl bg-sky-600 text-white text-sm sm:text-base font-semibold 
+              hover:bg-sky-700 hover:scale-105 hover:shadow-lg transition">
+      🚀 Try MediBridge Now
+    </a>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="py-6 text-center text-xs text-slate-500 border-t">
+  © 2025 MediBridge
+</footer>
+
+<script>
+   const currentPage = window.location.pathname.split("/").pop(); 
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("text-green-600", "font-bold", "underline");
+        } else {
+            link.classList.add("hover:text-green-600");
+        }
+    });
+
+    // Mobile Menu Toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+        document.getElementById("mobileNav").classList.toggle("hidden");
+    });
+</script>
+<script src="translations.js"></script>
+</body>
+</html>

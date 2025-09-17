@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>MediBridge | Health Worker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+<!-- Navbar -->
+<header class="fixed w-full top-0 left-0 z-50 bg-white/70 backdrop-blur-lg shadow-md">
+  <div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+ <div class="flex items-center -space-x-1 sm:space-x-0">
+            <img src="assets/Kerala-Logo.png" alt="MediBridge Logo" class="h-12 sm:h-14" />
+            <div class="flex flex-col items-center">
+                <h1 class="text-base sm:text-lg font-bold text-blue-700 leading-tight">
+                    SwasthyaSetu
+                </h1>
+                <h2 class="text-sm sm:text-base font-bold text-green-700 leading-tight">
+                    KERALA
+                </h2>
+            </div>
+        </div>
+    <nav class="space-x-8 hidden md:flex">
+      <a href="index.html" class="hover:text-green-600 font-medium transition">Home</a>
+      <a href="register.html" class="hover:text-green-600 font-medium transition">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600 font-medium transition">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600 font-medium transition">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600 font-medium transition">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600 font-medium transition">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600 font-medium transition">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600 font-medium transition">Comparison</a>
+    </nav>
+    <button id="menuBtn" class="md:hidden px-3 py-2 border rounded-lg text-green-700 border-green-700">☰</button>
+  </div>
+
+  <!-- Mobile Nav -->
+  <div id="mobileNav" class="hidden md:hidden bg-white/90 backdrop-blur-lg shadow-lg">
+    <nav class="flex flex-col space-y-2 px-6 py-4 text-green-700 font-medium">
+      <a href="index.html" class="hover:text-green-600">Home</a>
+      <a href="register.html" class="hover:text-green-600">Register</a>
+      <a href="dashboard.html" class="hover:text-green-600">Dashboard</a>
+      <a href="analytics.html" class="hover:text-green-600">Analytics</a>
+      <a href="feedback.html" class="hover:text-green-600">Feedback</a>
+      <a href="healthworker.html" class="hover:text-green-600">HealthWorker</a>
+      <a href="contact.html" class="hover:text-green-600">Contact</a>
+      <a href="comparison.html" class="hover:text-green-600">Comparison</a>
+    </nav>
+  </div>
+</header>
+
+
+<!-- Main -->
+<main class="flex-1 max-w-6xl mx-auto px-4 pt-28 pb-10 space-y-10">
+
+
+  <!-- Assisted Entry Card -->
+  <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6">
+    <h1 class="text-2xl font-bold text-sky-700">🩺 Assisted Entry</h1>
+    <p class="text-sm text-slate-600">For migrants without smartphones — collect data & sync later.</p>
+
+    <form id="entryForm" class="mt-6 grid md:grid-cols-3 gap-4">
+      <input required name="healthId" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" placeholder="Health ID / New"/>
+      <input required name="name" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" placeholder="Name"/>
+      <select required name="language" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400">
+        <option value="">Select Language</option>
+        <option>Malayalam</option><option>Hindi</option><option>Bengali</option><option>Odia</option>
+      </select>
+      <input type="number" step="0.1" name="temperature" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" placeholder="Temperature (°C)"/>
+      <input name="bp" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" placeholder="BP (e.g., 120/80)"/>
+      <input name="symptoms" class="w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" placeholder="Symptoms (comma separated)"/>
+      <textarea name="notes" class="md:col-span-3 w-full rounded-xl border px-3 py-2 focus:ring-2 focus:ring-sky-400" rows="3" placeholder="Notes / Prescription"></textarea>
+      
+      <div class="md:col-span-3 flex items-center gap-3 mt-2">
+        <button type="submit" class="px-5 py-2 rounded-xl bg-sky-600 text-white hover:bg-sky-700 transition">💾 Save Visit</button>
+        
+        <!-- Sync Status -->
+        <span id="syncStatus" class="hidden text-xs px-2 py-1 rounded bg-yellow-100 text-yellow-800 flex items-center gap-1">
+          <span class="w-3 h-3 border-2 border-yellow-600 border-t-transparent rounded-full animate-spin"></span>
+          Offline: sync pending
+        </span>
+        
+        <a href="dashboard.html" class="ml-auto text-sm underline hover:text-sky-600">📊 Open Patient Dashboard</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid md:grid-cols-3 gap-6">
+    <button class="bg-white rounded-2xl shadow p-6 text-left hover:shadow-lg hover:-translate-y-1 transition flex flex-col gap-2">
+      <span class="text-2xl">📷</span>
+      <h3 class="font-semibold text-slate-700">Scan ABHA / QR</h3>
+      <p class="text-sm text-slate-500">Find patient quickly</p>
+    </button>
+    <button class="bg-white rounded-2xl shadow p-6 text-left hover:shadow-lg hover:-translate-y-1 transition flex flex-col gap-2">
+      <span class="text-2xl">📅</span>
+      <h3 class="font-semibold text-slate-700">Schedule Camp</h3>
+      <p class="text-sm text-slate-500">Add outreach events</p>
+    </button>
+    <button class="bg-white rounded-2xl shadow p-6 text-left hover:shadow-lg hover:-translate-y-1 transition flex flex-col gap-2">
+      <span class="text-2xl">🖨</span>
+      <h3 class="font-semibold text-slate-700">Print Summary</h3>
+      <p class="text-sm text-slate-500">One-page health sheet</p>
+    </button>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="py-6 text-center text-xs text-slate-500 border-t">© 2025 MediBridge</footer>
+
+<script>
+
+   const currentPage = window.location.pathname.split("/").pop(); 
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("text-green-600", "font-bold", "underline");
+        } else {
+            link.classList.add("hover:text-green-600");
+        }
+    });
+
+    // Mobile Menu Toggle
+    document.getElementById("menuBtn").addEventListener("click", () => {
+        document.getElementById("mobileNav").classList.toggle("hidden");
+    });
+
+
+  const form = document.getElementById("entryForm");
+  const syncStatus = document.getElementById("syncStatus");
+  
+  form.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    syncStatus.classList.remove("hidden");
+    syncStatus.innerHTML = '<span class="w-3 h-3 border-2 border-yellow-600 border-t-transparent rounded-full animate-spin"></span> Saving locally...';
+    
+    setTimeout(()=>{
+      syncStatus.innerHTML = '✅ Saved locally - Syncing...';
+      syncStatus.className = "text-xs px-2 py-1 rounded bg-sky-100 text-sky-800";
+    },1500);
+    
+    setTimeout(()=>{
+      syncStatus.innerHTML = '☁ Synced to Server';
+      syncStatus.className = "text-xs px-2 py-1 rounded bg-emerald-100 text-emerald-700";
+    },3000);
+  });
+</script>
+<script src="translations.js"></script>
+</body>
+</html>

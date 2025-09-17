@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>SwasthyaSetu | Register & Login</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+<!-- NAV -->
+<header class="fixed w-full top-0 left-0 z-50 glass border-b">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <img src="assets/Kerala-Logo.png" alt="logo" class="h-10 w-10 rounded-md shadow-sm object-cover" onerror="this.style.display='none'"/>
+      <div>
+        <div data-translate="brand_name" class="font-bold text-lg text-sky-700">SwasthyaSetu</div>
+        <div data-translate="brand_tag" class="text-xs text-slate-500 -mt-0.5">KERALA</div>
+      </div>
+    </div>
+
+    <!-- large nav -->
+    <nav class="hidden md:flex items-center gap-6 text-sm">
+      <a data-translate="nav_home" href="index.html" class="nav-link hover:text-sky-600">Home</a>
+      <a data-translate="nav_register" href="register.html" class="nav-link hover:text-sky-600">Register</a>
+      <a data-translate="nav_dashboard" href="dashboard.html" class="nav-link hover:text-sky-600">Dashboard</a>
+      <a data-translate="nav_analytics" href="analytics.html" class="nav-link hover:text-sky-600">Analytics</a>
+      <a data-translate="nav_feedback" href="feedback.html" class="nav-link hover:text-sky-600">Feedback</a>
+      <a data-translate="nav_contact" href="contact.html" class="nav-link hover:text-sky-600">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <!-- language select -->
+      <select id="languageSelect" class="border rounded-lg px-2 py-1 text-sm" aria-label="Language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="ml">മലയാളം</option>
+        <option value="bn">বাংলা</option>
+        <option value="or">ଓଡ଼ିଆ</option>
+        <option value="ta">தமிழ்</option>
+        <option value="kn">ಕನ್ನಡ</option>
+      </select>
+
+      <!-- voice + dark toggle -->
+      <button id="voiceBtn" title="Voice assistant (speak / switch)" class="p-2 rounded-md hover:bg-slate-100">
+        <i class="fa-solid fa-microphone text-sky-600"></i>
+      </button>
+
+      <button id="darkToggle" class="p-2 rounded-md hover:bg-slate-100" title="Toggle dark mode">
+        <i id="darkIcon" class="fa-regular fa-moon text-slate-700"></i>
+      </button>
+
+      <!-- mobile menu -->
+      <button id="menuBtn" class="md:hidden p-2 border rounded-md text-sky-700 border-sky-700">☰</button>
+    </div>
+  </div>
+
+  <!-- mobile nav -->
+  <div id="mobileNav" class="hidden md:hidden bg-white/95">
+    <nav class="flex flex-col gap-2 px-4 py-3 text-sm">
+      <a data-translate="nav_home" href="index.html" class="nav-link">Home</a>
+      <a data-translate="nav_register" href="register.html" class="nav-link">Register</a>
+      <a data-translate="nav_dashboard" href="dashboard.html" class="nav-link">Dashboard</a>
+      <a data-translate="nav_analytics" href="analytics.html" class="nav-link">Analytics</a>
+      <a data-translate="nav_feedback" href="feedback.html" class="nav-link">Feedback</a>
+      <div class="pt-2">
+        <select id="languageSelectMobile" class="w-full border rounded px-2 py-1 text-sm">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="ml">മലയാളം</option>
+          <option value="bn">বাংলা</option>
+          <option value="or">ଓଡ଼ିଆ</option>
+          <option value="ta">தமிழ்</option>
+          <option value="kn">ಕನ್ನಡ</option>
+        </select>
+      </div>
+    </nav>
+  </div>
+</header>
+
+  <!-- Main -->
+  <main class="flex flex-1 items-center justify-center px-4 py-28">
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl grid md:grid-cols-2 overflow-hidden">
+
+      <!-- Branding -->
+      <div class="flex flex-col justify-center px-6 sm:px-10 py-10 sm:py-12 bg-blue-50 text-blue-900 text-center md:text-left">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-4 sm:mb-6">🌿 SwasthyaSetu</h1>
+        <p class="text-blue-800/80 leading-relaxed text-sm sm:text-base md:text-lg">
+          Kerala’s dedicated <span class="font-semibold">Migrant Digital Health Record System</span>.
+          Manage your <span class="font-semibold">health records securely</span>, access healthcare anytime, anywhere.
+        </p>
+      </div>
+
+      <!-- Forms -->
+      <div class="px-6 sm:px-8 py-10 sm:py-12 flex flex-col">
+
+        <!-- Tabs -->
+        <div class="flex justify-center gap-3 sm:gap-6 mb-8 bg-gray-100 p-2 rounded-full w-fit mx-auto shadow-md">
+          <button id="signupTab"
+            class="tab-btn relative px-6 sm:px-8 py-2 sm:py-3 rounded-full text-white bg-gradient-to-r from-blue-500 to-teal-400 shadow font-semibold transition">
+            Sign Up
+          </button>
+          <button id="loginTab"
+            class="tab-btn relative px-6 sm:px-8 py-2 sm:py-3 rounded-full text-gray-600 font-semibold bg-gray-200 hover:bg-teal-100 hover:text-teal-600 transition">
+            Login
+          </button>
+        </div>
+
+        <!-- Forms Container -->
+        <div class="relative w-full min-h-[400px] sm:min-h-[480px]">
+
+          <!-- Signup Form -->
+          <form id="signupForm" class="absolute inset-0 transition-all duration-500 opacity-100 translate-x-0 flex flex-col justify-center space-y-5 px-2 sm:px-6">
+            <input type="text" name="name" placeholder="Your Name" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+            <input type="email" name="email" placeholder="Your Email" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+            <input type="password" name="password" placeholder="Create Password" minlength="6" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+            <input type="password" name="repeat-password" placeholder="Repeat Password" minlength="6" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+
+            <button type="submit" class="w-full py-3 mt-4 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition">Sign Up</button>
+
+            <div class="flex items-center my-6">
+              <hr class="flex-grow border-gray-300" />
+              <span class="px-3 sm:px-4 text-gray-500 font-medium">OR</span>
+              <hr class="flex-grow border-gray-300" />
+            </div>
+
+            <!-- Socials -->
+            <div class="flex justify-center space-x-3 sm:space-x-4">
+              <button type="button" class="w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center bg-gray-100 shadow hover:bg-gray-200"><i class="fab fa-facebook-f text-blue-600"></i></button>
+              <button type="button" class="w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center bg-gray-100 shadow hover:bg-gray-200"><i class="fab fa-twitter text-sky-400"></i></button>
+              <button type="button" class="w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center bg-gray-100 shadow hover:bg-gray-200"><i class="fab fa-google text-red-500"></i></button>
+            </div>
+
+            <p class="text-xs sm:text-sm text-gray-500 text-center mt-4">Already a Member?
+              <a href="#" id="switchLogin" class="text-green-600 font-semibold hover:underline">Sign in here</a>
+            </p>
+          </form>
+
+          <!-- Login Form -->
+          <form id="loginForm" class="absolute inset-0 transition-all duration-500 opacity-0 hidden flex-col justify-center space-y-5 sm:space-y-6 px-2 sm:px-6">
+            <input type="email" name="email" placeholder="Email Address" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+            <input type="password" name="password" placeholder="Password" minlength="6" class="w-full px-4 py-3 border-b-2 border-gray-300 focus:border-green-500 outline-none" required />
+
+            <button type="submit" class="w-full py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition">Login</button>
+
+            <p class="text-xs sm:text-sm text-gray-500 text-center">New here?
+              <a href="#" id="switchSignup" class="text-green-600 font-semibold hover:underline">Create Account</a>
+            </p>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const currentPage = window.location.pathname.split("/").pop();
+    const links = document.querySelectorAll(".nav-link");
+    links.forEach(link => {
+      if (link.getAttribute("href") === currentPage) {
+        link.classList.add("text-green-600", "font-bold", "underline");
+      } else {
+        link.classList.add("hover:text-green-600");
+      }
+    });
+
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      document.getElementById("mobileNav").classList.toggle("hidden");
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const signupTab = document.getElementById("signupTab");
+      const loginTab = document.getElementById("loginTab");
+      const signupForm = document.getElementById("signupForm");
+      const loginForm = document.getElementById("loginForm");
+      const switchLogin = document.getElementById("switchLogin");
+      const switchSignup = document.getElementById("switchSignup");
+
+      function showSignup() {
+        signupForm.classList.remove("hidden");
+        setTimeout(() => {
+          signupForm.classList.add("opacity-100", "translate-x-0");
+          signupForm.classList.remove("opacity-0", "translate-x-full");
+        }, 10);
+        loginForm.classList.add("opacity-0", "translate-x-full");
+        loginForm.classList.remove("opacity-100", "translate-x-0");
+        setTimeout(() => loginForm.classList.add("hidden"), 500);
+        signupTab.classList.add("bg-gradient-to-r", "from-blue-500", "to-teal-400", "text-white");
+        signupTab.classList.remove("bg-gray-200", "text-gray-600");
+        loginTab.classList.add("bg-gray-200", "text-gray-600");
+        loginTab.classList.remove("bg-gradient-to-r", "from-blue-500", "to-teal-400", "text-white");
+      }
+
+      function showLogin() {
+        loginForm.classList.remove("hidden");
+        setTimeout(() => {
+          loginForm.classList.add("opacity-100", "translate-x-0");
+          loginForm.classList.remove("opacity-0", "translate-x-full");
+        }, 10);
+        signupForm.classList.add("opacity-0", "translate-x-full");
+        signupForm.classList.remove("opacity-100", "translate-x-0");
+        setTimeout(() => signupForm.classList.add("hidden"), 500);
+        loginTab.classList.add("bg-gradient-to-r", "from-blue-500", "to-teal-400", "text-white");
+        loginTab.classList.remove("bg-gray-200", "text-gray-600");
+        signupTab.classList.add("bg-gray-200", "text-gray-600");
+        signupTab.classList.remove("bg-gradient-to-r", "from-blue-500", "to-teal-400", "text-white");
+      }
+
+      signupTab.addEventListener("click", showSignup);
+      loginTab.addEventListener("click", showLogin);
+      switchLogin?.addEventListener("click", e => { e.preventDefault(); showLogin(); });
+      switchSignup?.addEventListener("click", e => { e.preventDefault(); showSignup(); });
+
+      signupForm.addEventListener("submit", e => {
+        e.preventDefault();
+        const pass = signupForm.querySelector("input[name='password']").value;
+        const repeat = signupForm.querySelector("input[name='repeat-password']").value;
+        if (pass !== repeat) {
+          alert("⚠️ Passwords do not match.");
+          return;
+        }
+        alert("✅ Signup Successful!");
+        showLogin();
+      });
+
+      loginForm.addEventListener("submit", e => {
+        e.preventDefault();
+        alert("🎉 Login Successful! Welcome back.");
+      });
+    });
+  </script>
+  <script src="translations.js"></script>
+</body>
+</html>
